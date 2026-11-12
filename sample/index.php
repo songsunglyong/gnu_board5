@@ -6,7 +6,7 @@ try {
 } catch (RuntimeException | mysqli_sql_exception | JsonException $error) {
     http_response_code(503);
     header('Content-Type: text/plain; charset=UTF-8');
-    exit('아람북스 콘텐츠를 불러오지 못했습니다. DB 설정과 초기 데이터 설치를 확인하세요.');
+    exit('우람북스 콘텐츠를 불러오지 못했습니다. DB 설정과 초기 데이터 설치를 확인하세요.');
 }
 $home = $menu['_home'];
 unset($menu['_home']);
@@ -36,7 +36,7 @@ $searching = !$group && isset($_GET['q']);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= $escape($title) ?> | 아람북스 샘플</title>
+    <title><?= $escape($title) ?> | 우람북스 샘플</title>
     <link rel="stylesheet" href="/sample/aram/site.css">
     <script src="/sample/aram/site.js" defer></script>
 </head>
@@ -44,8 +44,8 @@ $searching = !$group && isset($_GET['q']);
 <a class="skip" href="#main">본문으로 이동</a>
 <header class="site-header">
     <div class="wrap header-inner">
-        <a class="brand" href="<?= $url() ?>" aria-label="아람북스 샘플 홈">
-            <span class="brand-mark" aria-hidden="true">✿</span> 아람북스 <small>DEMO</small>
+        <a class="brand" href="<?= $url() ?>" aria-label="우람북스 샘플 홈">
+            <span class="brand-mark" aria-hidden="true">✿</span> 우람북스 <small>DEMO</small>
         </a>
         <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">메뉴</button>
         <nav id="site-nav" class="site-nav" aria-label="상단 메뉴">
@@ -100,7 +100,7 @@ $searching = !$group && isset($_GET['q']);
     <section class="hero">
         <div class="wrap hero-inner">
             <div class="hero-copy">
-                <p class="eyebrow">ARAM BOOKS · PICTURE BOOKS</p>
+                <p class="eyebrow">URAM BOOKS · PICTURE BOOKS</p>
                 <h1><?= nl2br($escape($home['title']), false) ?></h1>
                 <p><?= nl2br($escape($home['intro']), false) ?></p>
                 <a class="button" href="#series">전집 둘러보기 <span aria-hidden="true">→</span></a>
@@ -132,7 +132,7 @@ $searching = !$group && isset($_GET['q']);
         </div>
     </section>
 <?php } else { ?>
-    <div class="sub-hero tone-<?= $escape($groupKey) ?>"><div class="wrap"><p class="eyebrow">ARAM BOOKS</p><p class="section-name"><?= $escape($group['title']) ?></p></div></div>
+    <div class="sub-hero tone-<?= $escape($groupKey) ?>"><div class="wrap"><p class="eyebrow">URAM BOOKS</p><p class="section-name"><?= $escape($group['title']) ?></p></div></div>
     <section class="wrap section sub-section">
         <nav class="breadcrumb" aria-label="현재 위치">
             <a href="<?= $url() ?>">홈</a><span aria-hidden="true">/</span>
@@ -166,7 +166,7 @@ $searching = !$group && isset($_GET['q']);
 
 <footer class="site-footer">
     <div class="wrap footer-inner">
-        <div><strong>아람북스 샘플</strong><p>그누보드5 홈페이지 구현 데모</p></div>
+        <div><strong>우람북스 샘플</strong><p>그누보드5 홈페이지 구현 데모</p></div>
         <?php if (!$is_member) { ?>
             <nav aria-label="회원 메뉴">
                 <a href="<?= $escape(G5_BBS_URL . '/login.php?url=' . rawurlencode($url())) ?>">로그인</a>

@@ -11,7 +11,7 @@ if ($kind === 'book') {
     ?>
     <div class="book-summary">
         <div class="book-illustration tone-<?= $escape($groupKey) ?>" aria-hidden="true">
-            <div class="mini-cover"><span>ARAM BOOKS</span><strong><?= $escape($item['title']) ?></strong><b>✦</b></div>
+            <div class="mini-cover"><span>URAM BOOKS</span><strong><?= $escape($item['title']) ?></strong><b>✦</b></div>
         </div>
         <div>
             <p class="eyebrow"><?= $escape($group['title']) ?></p>
@@ -88,10 +88,10 @@ if ($kind === 'book') {
             <?php } else { ?><p>이 지역에 등록된 샘플 판매처가 없습니다.</p><?php } ?>
             <p>지역별 탐색을 위한 가상 판매처입니다.</p>
         <?php } elseif ($detailKey === 'history') { ?>
-            <h2>아람의 발자취</h2>
+            <h2>우람의 발자취</h2>
             <ul><?php foreach ($body['history'] as $event) { ?><li><?= $escape($event) ?></li><?php } ?></ul>
         <?php } else { ?>
-            <h2>아람북스</h2>
+            <h2>우람북스</h2>
             <p><?= $escape($body['intro']) ?></p>
         <?php } ?>
     </article>

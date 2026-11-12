@@ -1,0 +1,8 @@
+{
+  "orders": [
+    {"orderNo":"ERP-1001","orderedOn":"2026-11-02","sku":"P-101","product":"첫 그림책 전집","dealerCode":"D-01","dealer":"서울 샘플 판매처","quantity":2,"unitPrice":39000,"status":"shipped"},
+    {"orderNo":"ERP-1002","orderedOn":"2026-11-03","sku":"P-102","product":"놀이 수학 전집","dealerCode":"D-02","dealer":"부산 샘플 판매처","quantity":3,"unitPrice":48000,"status":"confirmed"},
+    {"orderNo":"ERP-1003","orderedOn":"2026-11-04","sku":"P-101","product":"첫 그림책 전집","dealerCode":"D-02","dealer":"부산 샘플 판매처","quantity":1,"unitPrice":39000,"status":"cancelled"},
+    {"orderNo":"ERP-1004","orderedOn":"2026-11-04","sku":"P-103","product":"자연 관찰 전집","dealerCode":"D-01","dealer":"서울 샘플 판매처","quantity":4,"unitPrice":29000,"status":"confirmed"}
+  ]
+}

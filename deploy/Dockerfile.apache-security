@@ -1,0 +1,10 @@
+# Patch an existing application image without changing its application files.
+# docker build --build-arg APP_IMAGE=gamecha-gnuboard5-demo-app:local \
+#   -f deploy/Dockerfile.apache-security -t gamecha-gnuboard5-demo-app:apache-patched .
+ARG APP_IMAGE=gamecha-gnuboard5-demo-app:local
+FROM ${APP_IMAGE}
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends --only-upgrade apache2 apache2-bin apache2-data apache2-utils \
+    && apache_version="$(apache2 -v | sed -n 's|^Server version: Apache/\([^ ]*\).*|\1|p')" \
+    && dpkg --compare-versions "$apache_version" ge 2.4.71 \
+    && rm -rf /var/lib/apt/lists/*

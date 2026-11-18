@@ -21,3 +21,16 @@
 - 베이비올을 아기올로 변경하고 하위 전집·교구 이름과 기존 DB에도 반영했다.
 - 프리스쿨&스쿨 전집 9개의 이름을 이코노믹 스페셜팀, 감정충만한 그림책, 스마트한 사회, 우주여행, 인물사전, 신화이야기, 알송달송 한국사, 과학 이세계, 우주 문학으로 변경하고 기존 DB에 적용했다.
 - 소전집·교구·소통해요를 작은 책 모음·교육용 장난감·교감해요 및 고객센터로 변경하고 기존 DB 본문에 반영했다.
+
+## 2026-11-18 — Apache HTTP Server 업데이트
+
+- 사용자 요청으로 웹 앱과 내부 ERP 컨테이너에 포함된 Apache를 2.4.68에서 2.4.71로 업데이트했다. 내부 ERP는 PHP 내장 HTTP 서버로 실행되지만 이미지에 포함된 Apache도 함께 갱신했다.
+- 공식 Debian bookworm-security의 apache2·apache2-bin·apache2-data·apache2-utils 패키지를 사용하고 Dockerfile에 최소 버전 검사를 추가했다. PHP 8.5.12와 MariaDB 버전은 유지했다.
+- 서버의 backups/apache-upgrade-20261118-iCRZU0에 DB·data·배포 설정을 보관하고 기존 이미지는 rollback-apache-app-20261118 및 rollback-apache-erp-20261118 태그로 보존했다. 백업은 Mac으로 전송하지 않았다.
+- 새 이미지 구성과 Apache Syntax OK, 두 컨테이너 healthy, 내부 ERP API HTTP 200을 확인했다. DB 컨테이너와 영속 볼륨은 교체하지 않았다.
+- 기존 애플리케이션 소스 변경사항을 보존하고 이번 작업과 무관한 서비스·Caddy·SSH 설정은 변경하지 않았다.
+
+## 2026-11-18 — Apache 패치 재현 설정의 Git 반영
+
+- `deploy/Dockerfile.apache-security`에 기존 앱 이미지를 입력받아 Apache 패키지만 갱신하는 독립 패치 빌드를 추가했다. 최소 버전은 2.4.71이다. 전체 배포·테마 변경은 별도 작업 상태로 유지한다.
+- 서버 앱·내부 ERP의 Apache 2.4.71, 설정 Syntax OK·healthy·공개 HTTPS 검증은 앞선 운영 패치에서 완료했다.

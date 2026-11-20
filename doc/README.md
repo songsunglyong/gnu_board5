@@ -1,8 +1,8 @@
 # 설치 및 실행
 
-Git, Python 3, PHP 8.5.12 이상인 안정판 8.5.x, MariaDB가 필요하다. PHP 확장은 실행 스크립트가 확인한다. 패치 전 PHP를 선택하면 서버가 시작되지 않는다. PHP 8.5는 그누보드7의 Composer 요구사항 `^8.2`에도 해당한다.
+Git, Python 3, PHP 8.5.13 이상인 안정판 8.5.x, MariaDB가 필요하다. PHP 확장은 실행 스크립트가 확인한다. 8.5.13 미만 PHP는 보안 패치 전 버전이므로 `scripts/check-php.php`가 서버 시작을 막는다. PHP 8.5는 그누보드7의 Composer 요구사항 `^8.2`에도 해당한다.
 
-[PHP 8.5.12 공식 발표](https://www.php.net/releases/8_5_12.php) · [그누보드7 PHP 요구사항](https://github.com/gnuboard/g7/blob/main/composer.json)
+[KISA PHP 보안 업데이트 권고(2026-11-19)](https://www.boho.or.kr/kr/bbs/view.do?bbsId=B0000133&pageIndex=1&nttId=72318&menuNo=205020) · [그누보드7 PHP 요구사항](https://github.com/gnuboard/g7/blob/main/composer.json)
 
 ```sh
 git clone https://github.com/songsunglyong/gnu_board5.git
@@ -20,7 +20,7 @@ sh scripts/prepare.sh
 
 2. 저장소 루트에서 `sh scripts/serve.sh`를 실행한다. PHP 경로를 지정하려면 `PHP_BIN=/path/to/php sh scripts/serve.sh`를 사용한다. 기본 포트는 8080이며 `PORT`로 바꿀 수 있다.
 3. [로컬 설치 화면](http://127.0.0.1:8080/install/)에서 DB 호스트 `127.0.0.1`, 사용자와 DB 이름 `g5_sample`, 앞에서 설정한 DB 비밀번호를 입력한다. 테이블 접두사는 `g5_`를 사용하고 쇼핑몰 설치는 해제한다. 관리자 계정은 이 화면에서 정한다.
-4. 다른 터미널에서 `php scripts/configure-board.php`를 실행한다. 서버에서 별도 PHP를 선택했다면 이 명령도 같은 바이너리로 실행한다. 이 명령은 기본 자유게시판을 샘플 게시판으로 설정한다. 이어서 같은 PHP로 `php scripts/configure-aram.php`를 실행해 우람북스 전용 DB 테이블과 초기 데이터를 설치한다.
+4. 다른 터미널에서 `php scripts/configure-board.php`를 실행한다. 서버에서 별도 PHP를 선택했다면 이 명령도 같은 바이너리로 실행한다. 이 명령은 기본 자유게시판을 샘플 게시판으로 설정한다. 이어서 같은 PHP로 `php scripts/configure-aram.php`를 실행해 우람북스 전용 DB 테이블과 초기 데이터를 설치한다. 이어서 `php scripts/configure-theme.php`로 테마를 연결하고 적용한다.
 5. [샘플 시작 화면](http://127.0.0.1:8080/)에서 회원가입 후 일반 회원으로 로그인한다. [샘플 게시판](http://127.0.0.1:8080/bbs/board.php?bo_table=free)에서 글을 작성하고, 목록과 상세 화면에서 확인하고, 수정한 뒤 삭제한다. 로그아웃 상태에서는 글을 조회할 수 있고 글쓰기에는 로그인이 필요하다.
 
 PHP와 MariaDB는 로컬 개발용으로 사용한다. DB 설정과 데이터는 Git에서 제외되는 `.runtime/`에 저장된다.
@@ -57,3 +57,21 @@ PHP 8.5.12의 로컬 HTTP 환경에서 비회원 로그인 이동, 로그인 후
 초기화 명령 `php scripts/configure-aram.php`는 누락된 대메뉴 데이터만 추가하므로 재실행 시 저장된 본문을 보존한다. `scripts/aram-seed.php`는 설치 시에만 사용한다. DB 조회 실패나 초기 데이터 미설치 시 홈페이지는 HTTP 503을 반환한다.
 
 기존 설치에서 같은 초기화 명령을 실행하면 저장된 콘텐츠의 이전 브랜드·전집명이 우람북스 명칭으로 바뀐다. 다른 본문과 URL 키는 보존한다.
+
+## 우람북스 테마
+
+테마 소스는 `theme/uram/`에 있다. 로컬 설치 후 같은 PHP로 다음 명령을 실행한다.
+
+```sh
+php scripts/configure-theme.php
+```
+
+명령은 그누보드의 `theme/uram`을 저장소 테마에 연결하고 `cf_theme`를 `uram`으로 설정한다. [홈페이지](http://127.0.0.1:8080/)에서 DB 전집을 탐색하고, 로그인·회원가입·게시판에도 공통 헤더와 푸터가 표시된다. 이전 `/sample/index.php` URL의 쿼리도 새 홈페이지로 전달한다.
+
+다른 서버에서는 저장소의 `theme/uram` 폴더를 그누보드의 `theme/uram`에 복사하고, DB 콘텐츠 초기화 후 **관리자 → 환경설정 → 테마설정 → 우람북스**를 적용한다. 기본 회원·게시판 스킨을 사용하는 반응형 테마다. 콘텐츠 관리 화면은 별도 개발 대상이다.
+
+디자인 수정 위치는 `header.php`, `footer.php`, `site.css`이고 홈·전집 본문 구조는 `index.php`, `detail.php`에서 수정한다. `head.sub.php`는 그누보드 5.6.48의 문서 초기화와 공통 스크립트를 기반으로 하므로 그누보드 업그레이드 시 해당 부분도 비교한다.
+
+## Docker 서버 배포
+
+[배포 구성과 운영 명령](../deploy/README.md), [실제 배포 결과와 검증 내역](DEPLOYMENT.md)을 참고한다. 실제 환경 파일과 비밀번호는 서버에서 생성하고 Git에 포함하지 않는다.

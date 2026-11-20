@@ -1,6 +1,6 @@
 <?php
-if (PHP_VERSION_ID < 80512 || PHP_VERSION_ID >= 80600 || PHP_EXTRA_VERSION !== '') {
-    fwrite(STDERR, "PHP 8.5.12 이상의 안정판 8.5.x가 필요합니다. 현재 버전: " . PHP_VERSION . "\n");
+if (PHP_VERSION_ID < 80513 || PHP_VERSION_ID >= 80600 || PHP_EXTRA_VERSION !== '') {
+    fwrite(STDERR, "PHP 8.5.13 이상의 안정판 8.5.x가 필요합니다. 현재 버전: " . PHP_VERSION . "\n");
     exit(1);
 }
 
